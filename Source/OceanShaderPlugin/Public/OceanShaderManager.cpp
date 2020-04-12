@@ -1,4 +1,4 @@
-#include "OceanShaderManager.h"
+#include "OceanShaderPlugin/Private/OceanShaderManager.h"
 #include <Engine/World.h>
 #include <Engine/Texture2D.h>
 
