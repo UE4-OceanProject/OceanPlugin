@@ -14,10 +14,10 @@
 	"IsBetaVersion": false,
 	"Installed": false,
 	"Modules": [
-		{
-			"Name": "OceanShaderPlugin",
-			"Type": "Runtime",
-			"LoadingPhase": "Default"
-		}
+    {
+      "Name": "OceanShaderPlugin",
+      "Type": "Runtime",
+      "LoadingPhase": "PreDefault"
+    }
 	]
 }
