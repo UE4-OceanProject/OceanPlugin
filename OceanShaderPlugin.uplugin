@@ -19,5 +19,11 @@
       "Type": "Runtime",
       "LoadingPhase": "PreDefault"
     }
-	]
+  ],
+  "Plugins": [
+    {
+      "Name": "TimePlugin",
+      "Enabled": true
+    }
+  ]
 }
