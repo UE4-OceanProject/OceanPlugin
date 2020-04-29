@@ -233,7 +233,7 @@ FVector AOceanShaderManager::CalculateGerstnerWaveSetVector(const FVector& posit
 
 	for (int i = 0; i < WaveClusters.Num(); i++)
 	{
-		FWaveSetParameters2 offsets = FWaveSetParameters2();
+		FWaveSetParameters offsets = FWaveSetParameters();
 		if (WaveSetOffsetsOverride.IsValidIndex(i))
 		{
 			offsets = WaveSetOffsetsOverride[i];

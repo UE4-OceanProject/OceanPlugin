@@ -58,7 +58,7 @@ void UInfiniteOceanSystemComponent::TickComponent(float DeltaTime, enum ELevelTi
 		//CamLoc = client->GetViewLocation();
 		//CamRot = client->GetViewRotation();
 
-		if (FollowMethod == LookAtLocation2 || FollowMethod == FollowCamera2)
+		if (FollowMethod == LookAtLocation || FollowMethod == FollowCamera)
 		{
 			NewLoc = CamLoc;
 			NewLoc = NewLoc.GridSnap(GridSnapSize);
@@ -122,16 +122,16 @@ void UInfiniteOceanSystemComponent::TickComponent(float DeltaTime, enum ELevelTi
 
 	switch (FollowMethod)
 	{
-		case LookAtLocation2:
+		case LookAtLocation:
 			if (!FMath::SegmentPlaneIntersection(CamLoc, CamLoc + CamRot.Vector() * MaxLookAtDistance, FPlane(GetAttachParent()->GetComponentLocation(), FVector(0, 0, 1)), NewLoc))
 			{
 				NewLoc = CamLoc + CamRot.Vector() * MaxLookAtDistance;
 			}
 			break;
-		case FollowCamera2:
+		case FollowCamera:
 			NewLoc = CamLoc;
 			break;
-		case FollowPawn2:
+		case FollowPawn:
 			NewLoc = PawnLoc;
 			break;
 		default:
@@ -160,7 +160,7 @@ void UInfiniteOceanSystemComponent::TickComponent(float DeltaTime, enum ELevelTi
 		GetAttachParent()->SetRelativeScale3D(FVector(1, 1, 1));
 	}
 
-	if (FollowMethod == Stationary2) return;
+	if (FollowMethod == Stationary) return;
 
 	NewLoc = NewLoc.GridSnap(GridSnapSize);
 	NewLoc.Z = GetAttachParent()->GetComponentLocation().Z;

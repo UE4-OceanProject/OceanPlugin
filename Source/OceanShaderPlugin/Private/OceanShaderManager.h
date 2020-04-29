@@ -9,7 +9,7 @@
 * Contains the parameters necessary for a single Gerstner wave.
 */
 USTRUCT(BlueprintType)
-struct OCEANSHADERPLUGIN_API FWaveParameter2
+struct OCEANSHADERPLUGIN_API FWaveParameter
 {
 	GENERATED_USTRUCT_BODY();
 
@@ -28,10 +28,10 @@ struct OCEANSHADERPLUGIN_API FWaveParameter2
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
 	float TimeScale;
 
-	FORCEINLINE FWaveParameter2(float InRotation, float InLength, float InAmplitude, float InSteepness, float InTimeScale);
+	FORCEINLINE FWaveParameter(float InRotation, float InLength, float InAmplitude, float InSteepness, float InTimeScale);
 
 	//Default struct values
-	FWaveParameter2()
+	FWaveParameter()
 	{
 		Rotation = 0.45f;
 		Length = 1200.f;
@@ -41,7 +41,7 @@ struct OCEANSHADERPLUGIN_API FWaveParameter2
 	}
 };
 
-FORCEINLINE FWaveParameter2::FWaveParameter2(float InRotation, float InLength, float InAmplitude, float InSteepness, float InTimeScale)
+FORCEINLINE FWaveParameter::FWaveParameter(float InRotation, float InLength, float InAmplitude, float InSteepness, float InTimeScale)
 	: Rotation(InRotation), Length(InLength), Amplitude(InAmplitude), Steepness(InSteepness), TimeScale(InTimeScale)
 { }
 
@@ -49,45 +49,45 @@ FORCEINLINE FWaveParameter2::FWaveParameter2(float InRotation, float InLength, f
 * Contains the parameters necessary for a set of Gerstner waves.
 */
 USTRUCT(BlueprintType)
-struct OCEANSHADERPLUGIN_API FWaveSetParameters2
+struct OCEANSHADERPLUGIN_API FWaveSetParameters
 {
 	GENERATED_USTRUCT_BODY();
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave01;
+	FWaveParameter Wave01;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave02;
+	FWaveParameter Wave02;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave03;
+	FWaveParameter Wave03;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave04;
+	FWaveParameter Wave04;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave05;
+	FWaveParameter Wave05;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave06;
+	FWaveParameter Wave06;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave07;
+	FWaveParameter Wave07;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	FWaveParameter2 Wave08;
+	FWaveParameter Wave08;
 
 	//Default struct values
-	FWaveSetParameters2()
+	FWaveSetParameters()
 	{
-		Wave01 = FWaveParameter2(20.f, 1.05f, 1.4f, 1.2f, 1.f);
-		Wave02 = FWaveParameter2(2-0.05f, 0.65f, 1.1f, 0.6f, 1.f);
-		Wave03 = FWaveParameter2(20.045f, 1.85f, 2.1f, 1.35f, 1.f);
-		Wave04 = FWaveParameter2(20.02f, 0.65f, 0.9f, 0.9f, 1.f);
-		Wave05 = FWaveParameter2(2-0.015f, 1.28f, 1.854f, 1.2f, 1.f);
-		Wave06 = FWaveParameter2(20.065f, 0.75f, 1.15f, 0.5f, 1.f);
-		Wave07 = FWaveParameter2(20.01f, 1.15f, 1.55f, 1.15f, 1.f);
-		Wave08 = FWaveParameter2(2-0.04f, 1.45f, 1.75f, 0.45f, 1.f);
+		Wave01 = FWaveParameter(0.f, 1.05f, 1.4f, 1.2f, 1.f);
+		Wave02 = FWaveParameter(-0.05f, 0.65f, 1.1f, 0.6f, 1.f);
+		Wave03 = FWaveParameter(0.045f, 1.85f, 2.1f, 1.35f, 1.f);
+		Wave04 = FWaveParameter(0.02f, 0.65f, 0.9f, 0.9f, 1.f);
+		Wave05 = FWaveParameter(-0.015f, 1.28f, 1.854f, 1.2f, 1.f);
+		Wave06 = FWaveParameter(0.065f, 0.75f, 1.15f, 0.5f, 1.f);
+		Wave07 = FWaveParameter(0.01f, 1.15f, 1.55f, 1.15f, 1.f);
+		Wave08 = FWaveParameter(-0.04f, 1.45f, 1.75f, 0.45f, 1.f);
 	}
 };
 
@@ -141,12 +141,12 @@ public:
 	/* Median Gerstner wave settings 
 	(only 1 cluster is used in the material by default).*/
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	TArray<FWaveParameter2> WaveClusters;
+	TArray<FWaveParameter> WaveClusters;
 
 	/* Individual Gerstner wave settings.
 	(leave blank to use the default offsets).*/
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
-	TArray<FWaveSetParameters2> WaveSetOffsetsOverride;
+	TArray<FWaveSetParameters> WaveSetOffsetsOverride;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite)
 	float NetWorkTimeOffset;
