@@ -2,9 +2,9 @@
 	"FileVersion": 3,
 	"Version": 1,
 	"VersionName": "1.0",
-	"FriendlyName": "OceanShaderPlugin",
+	"FriendlyName": "OceanPlugin",
 	"Description": "",
-	"Category": "Other",
+	"Category": "Ocean",
 	"CreatedBy": "",
 	"CreatedByURL": "",
 	"DocsURL": "",
@@ -15,7 +15,7 @@
 	"Installed": false,
 	"Modules": [
     {
-      "Name": "OceanShaderPlugin",
+      "Name": "OceanPlugin",
       "Type": "Runtime",
       "LoadingPhase": "PreDefault"
     }

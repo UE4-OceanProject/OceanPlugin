@@ -2,14 +2,14 @@
 
 #include "CoreMinimal.h"
 #include "Landscape.h"
-#include "OceanShaderManager.generated.h"
+#include "OceanManager.generated.h"
 
 
 /*
 * Contains the parameters necessary for a single Gerstner wave.
 */
 USTRUCT(BlueprintType)
-struct OCEANSHADERPLUGIN_API FWaveParameter
+struct OCEANPLUGIN_API FWaveParameter
 {
 	GENERATED_USTRUCT_BODY();
 
@@ -49,7 +49,7 @@ FORCEINLINE FWaveParameter::FWaveParameter(float InRotation, float InLength, flo
 * Contains the parameters necessary for a set of Gerstner waves.
 */
 USTRUCT(BlueprintType)
-struct OCEANSHADERPLUGIN_API FWaveSetParameters
+struct OCEANPLUGIN_API FWaveSetParameters
 {
 	GENERATED_USTRUCT_BODY();
 
@@ -110,7 +110,7 @@ private:
 * TODO: Investigate whether a single implementation could be used to increase performance.
 */
 UCLASS(BlueprintType, Blueprintable)
-class OCEANSHADERPLUGIN_API AOceanShaderManager : public AActor
+class OCEANPLUGIN_API AOceanManager : public AActor
 {
 	GENERATED_UCLASS_BODY()
 

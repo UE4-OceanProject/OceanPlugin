@@ -1,9 +1,9 @@
-#include "OceanShaderPlugin/Private/OceanShaderManager.h"
+#include "OceanPlugin/Private/OceanManager.h"
 #include <Engine/World.h>
 #include <Engine/Texture2D.h>
 
 
-AOceanShaderManager::AOceanShaderManager(const class FObjectInitializer& ObjectInitializer)
+AOceanManager::AOceanManager(const class FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
@@ -21,7 +21,7 @@ AOceanShaderManager::AOceanShaderManager(const class FObjectInitializer& ObjectI
 	ModulationPower = 0.9f;
 }
 
-void AOceanShaderManager::BeginPlay()
+void AOceanManager::BeginPlay()
 {
 	Super::BeginPlay();
 
@@ -31,13 +31,13 @@ void AOceanShaderManager::BeginPlay()
 	}
 }
 
-float AOceanShaderManager::GetTimeSeconds(const UWorld* World) const
+float AOceanManager::GetTimeSeconds(const UWorld* World) const
 {
 	if (World == nullptr) World = GetWorld();
 	return World->GetTimeSeconds() + NetWorkTimeOffset;
 }
 
-float AOceanShaderManager::GetWaveHeight(const FVector& location, const UWorld* World) const
+float AOceanManager::GetWaveHeight(const FVector& location, const UWorld* World) const
 {
 	// Flat ocean buoyancy optimization
 	if (!EnableGerstnerWaves)
@@ -75,7 +75,7 @@ float AOceanShaderManager::GetWaveHeight(const FVector& location, const UWorld* 
 	return CalculateGerstnerWaveSetHeight(location, time * GlobalWaveSpeed) * LandscapeModulation + RootComponent->GetComponentLocation().Z;
 }
 
-void AOceanShaderManager::LoadLandscapeHeightmap(UTexture2D* Tex2D)
+void AOceanManager::LoadLandscapeHeightmap(UTexture2D* Tex2D)
 {
 	if (!Tex2D)
 	{
@@ -113,7 +113,7 @@ void AOceanShaderManager::LoadLandscapeHeightmap(UTexture2D* Tex2D)
 // 	UE_LOG(LogTemp, Warning, TEXT("numx = %f"), (float)HeightmapPixels[0].R);
 }
 
-FLinearColor AOceanShaderManager::GetHeightmapPixel(float U, float V) const
+FLinearColor AOceanManager::GetHeightmapPixel(float U, float V) const
 {
 	if (HeightmapPixels.Num() == 0)
 	{
@@ -135,7 +135,7 @@ FLinearColor AOceanShaderManager::GetHeightmapPixel(float U, float V) const
 	return FLinearColor(HeightmapPixels[(PixelY - 1) * Width + PixelX - 1]);
 }
 
-FVector AOceanShaderManager::GetWaveHeightValue(const FVector& location, const UWorld* World, bool HeightOnly, bool TwoIterations)
+FVector AOceanManager::GetWaveHeightValue(const FVector& location, const UWorld* World, bool HeightOnly, bool TwoIterations)
 {
 	const float SeaLevel = RootComponent->GetComponentLocation().Z;
 
@@ -198,7 +198,7 @@ FVector AOceanShaderManager::GetWaveHeightValue(const FVector& location, const U
 	return CalculateGerstnerWaveSetVector(location, time * GlobalWaveSpeed, !HeightOnly, true) * LandscapeModulation + FVector(0, 0, SeaLevel);
 }
 
-float AOceanShaderManager::CalculateGerstnerWaveSetHeight(const FVector& position, float time) const
+float AOceanManager::CalculateGerstnerWaveSetHeight(const FVector& position, float time) const
 {
 	return CalculateGerstnerWaveSetVector(position, time, false, true).Z;
 
@@ -224,7 +224,7 @@ float AOceanShaderManager::CalculateGerstnerWaveSetHeight(const FVector& positio
 // 	return sum / 8.f;
 }
 
-FVector AOceanShaderManager::CalculateGerstnerWaveSetVector(const FVector& position, float time, bool CalculateXY, bool CalculateZ) const
+FVector AOceanManager::CalculateGerstnerWaveSetVector(const FVector& position, float time, bool CalculateXY, bool CalculateZ) const
 {
 	FVector sum = FVector(0, 0, 0);
 
@@ -293,7 +293,7 @@ FVector AOceanShaderManager::CalculateGerstnerWaveSetVector(const FVector& posit
 	return sum / (WaveClusters.Num() * 8);
 }
 
-FVector AOceanShaderManager::CalculateGerstnerWaveVector(float rotation, float waveLength, float amplitude, float steepness, const FVector2D& direction, const FVector& position, float time, FWaveCache& InWaveCache, bool CalculateXY, bool CalculateZ) const
+FVector AOceanManager::CalculateGerstnerWaveVector(float rotation, float waveLength, float amplitude, float steepness, const FVector2D& direction, const FVector& position, float time, FWaveCache& InWaveCache, bool CalculateXY, bool CalculateZ) const
 {
 	float frequency = (2 * PI) / waveLength;
 

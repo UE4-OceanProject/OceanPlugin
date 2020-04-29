@@ -39,7 +39,7 @@ enum EFollowMethod
  *	Follows camera and scales by distance to make a plane appear as infinite.
  */
 UCLASS(hidecategories=(Object, Mobility, LOD), ClassGroup=Physics, showcategories=Trigger, meta=(BlueprintSpawnableComponent))
-class OCEANSHADERPLUGIN_API UInfiniteOceanSystemComponent : public USceneComponent
+class OCEANPLUGIN_API UInfiniteOceanSystemComponent : public USceneComponent
 {
 	GENERATED_UCLASS_BODY()
 

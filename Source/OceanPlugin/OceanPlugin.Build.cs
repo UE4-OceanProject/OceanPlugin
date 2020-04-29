@@ -2,9 +2,9 @@
 
 using UnrealBuildTool;
 
-public class OceanShaderPlugin : ModuleRules
+public class OceanPlugin : ModuleRules
 {
-	public OceanShaderPlugin(ReadOnlyTargetRules Target) : base(Target)
+	public OceanPlugin(ReadOnlyTargetRules Target) : base(Target)
 	{
 		PCHUsage = ModuleRules.PCHUsageMode.UseExplicitOrSharedPCHs;
 		

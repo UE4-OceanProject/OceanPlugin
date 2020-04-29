@@ -5,7 +5,7 @@
 #include "CoreMinimal.h"
 #include "Modules/ModuleManager.h"
 
-class FOceanShaderPluginModule : public IModuleInterface
+class FOceanPluginModule : public IModuleInterface
 {
 public:
 
