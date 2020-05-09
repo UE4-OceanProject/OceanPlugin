@@ -1,20 +1,33 @@
-// Copyright 1998-2019 Epic Games, Inc. All Rights Reserved.
+/*=================================================
+* FileName: OceanPlugin.cpp
+* 
+* Created by: DotCam
+* Project name: OceanProject
+* Unreal Engine version: 4.18.3
+* Created on: 2015/03/05
+*
+* Last Edited on: 2018/03/15
+* Last Edited by: Felipe "Zoc" Silveira
+* 
+* -------------------------------------------------
+* For parts referencing UE4 code, the following copyright applies:
+* Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
+*
+* Feel free to use this software in any commercial/free game.
+* Selling this as a plugin/item, in whole or part, is not allowed.
+* See "OceanProject\License.md" for full licensing details.
+* =================================================*/
 
 #include "OceanPlugin.h"
+#include "Modules/ModuleManager.h"
 
-#define LOCTEXT_NAMESPACE "FOceanPluginModule"
 
-void FOceanPluginModule::StartupModule()
+void OceanPluginImpl::StartupModule()
 {
-	// This code will execute after your module is loaded into memory; the exact timing is specified in the .uplugin file per-module
 }
 
-void FOceanPluginModule::ShutdownModule()
+void OceanPluginImpl::ShutdownModule()
 {
-	// This function may be called during shutdown to clean up your module.  For modules that support dynamic reloading,
-	// we call this function before unloading the module.
 }
 
-#undef LOCTEXT_NAMESPACE
-	
-IMPLEMENT_MODULE(FOceanPluginModule, OceanPlugin)
+IMPLEMENT_MODULE(FDefaultGameModuleImpl, OceanPlugin)
