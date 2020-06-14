@@ -5,25 +5,23 @@
 	"FriendlyName": "OceanPlugin",
 	"Description": "",
 	"Category": "Ocean",
-	"CreatedBy": "",
+	"CreatedBy": "DotCam",
 	"CreatedByURL": "",
 	"DocsURL": "",
 	"MarketplaceURL": "",
 	"SupportURL": "",
 	"CanContainContent": true,
-	"IsBetaVersion": false,
-	"Installed": false,
 	"Modules": [
-    {
-      "Name": "OceanPlugin",
-      "Type": "Runtime",
-      "LoadingPhase": "PreDefault"
-    }
-  ],
-  "Plugins": [
-    {
-      "Name": "TimePlugin",
-      "Enabled": true
-    }
-  ]
+		{
+			"Name": "OceanPlugin",
+			"Type": "Runtime",
+			"LoadingPhase": "PreDefault"
+		}
+	],
+	"Plugins": [
+		{
+			"Name": "TimePlugin",
+			"Enabled": true
+		}
+	]
 }

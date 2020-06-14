@@ -1,22 +1,5 @@
-/*=================================================
-* FileName: InfiniteSystemComponent.cpp
-* 
-* Created by: TK-Master
-* Project name: OceanProject
-* Unreal Engine version: 4.18.3
-* Created on: 2015/04/26
-*
-* Last Edited on: 2018/03/15
-* Last Edited by: Felipe "Zoc" Silveira
-* 
-* -------------------------------------------------
-* For parts referencing UE4 code, the following copyright applies:
-* Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
-*
-* Feel free to use this software in any commercial/free game.
-* Selling this as a plugin/item, in whole or part, is not allowed.
-* See "OceanProject\License.md" for full licensing details.
-* =================================================*/
+// For copyright see LICENSE in EnvironmentProject root dir, or:
+//https://github.com/UE4-OceanProject/OceanProject/blob/Master-Environment-Project/LICENSE
 
 #include "InfiniteSystemComponent.h"
 #include "Kismet/GameplayStatics.h"
@@ -78,7 +61,7 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 		//CamLoc = client->GetViewLocation();
 		//CamRot = client->GetViewRotation();
 
-		if (FollowMethod == LookAtLocation || FollowMethod == FollowCamera)
+		if (FollowMethod == EFollowMethod::LookAtLocation || FollowMethod == EFollowMethod::FollowCamera)
 		{
 			NewLoc = CamLoc;
 			NewLoc = NewLoc.GridSnap(GridSnapSize);
@@ -142,16 +125,16 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 
 	switch (FollowMethod)
 	{
-		case LookAtLocation:
+		case EFollowMethod::LookAtLocation:
 			if (!FMath::SegmentPlaneIntersection(CamLoc, CamLoc + CamRot.Vector() * MaxLookAtDistance, FPlane(GetAttachParent()->GetComponentLocation(), FVector(0, 0, 1)), NewLoc))
 			{
 				NewLoc = CamLoc + CamRot.Vector() * MaxLookAtDistance;
 			}
 			break;
-		case FollowCamera:
+		case EFollowMethod::FollowCamera:
 			NewLoc = CamLoc;
 			break;
-		case FollowPawn:
+		case EFollowMethod::FollowPawn:
 			NewLoc = PawnLoc;
 			break;
 		default:
@@ -180,7 +163,7 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 		GetAttachParent()->SetRelativeScale3D(FVector(1, 1, 1));
 	}
 
-	if (FollowMethod == Stationary) return;
+	if (FollowMethod == EFollowMethod::Stationary) return;
 
 	NewLoc = NewLoc.GridSnap(GridSnapSize);
 	NewLoc.Z = GetAttachParent()->GetComponentLocation().Z;

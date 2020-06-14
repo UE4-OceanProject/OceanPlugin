@@ -1,22 +1,5 @@
-/*=================================================
-* FileName: OceanManager.cpp
-* 
-* Created by: DotCam
-* Project name: OceanProject
-* Unreal Engine version: 4.18.3
-* Created on: 2015/03/05
-*
-* Last Edited on: 2018/03/15
-* Last Edited by: Felipe "Zoc" Silveira
-* 
-* -------------------------------------------------
-* For parts referencing UE4 code, the following copyright applies:
-* Copyright 1998-2018 Epic Games, Inc. All Rights Reserved.
-*
-* Feel free to use this software in any commercial/free game.
-* Selling this as a plugin/item, in whole or part, is not allowed.
-* See "OceanProject\License.md" for full licensing details.
-* =================================================*/
+// For copyright see LICENSE in EnvironmentProject root dir, or:
+//https://github.com/UE4-OceanProject/OceanProject/blob/Master-Environment-Project/LICENSE
 
 #include "OceanManager.h"
 #include <Engine/World.h>
@@ -28,17 +11,9 @@ AOceanManager::AOceanManager(const class FObjectInitializer& ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
-	EnableGerstnerWaves = true;
-	GlobalWaveDirection = FVector2D(0, 1);
-	GlobalWaveSpeed = 1.f;
-	GlobalWaveAmplitude = 1.f;
-	DistanceCheck = 2000.f;
 	WaveClusters.AddDefaulted(1);
 	WaveParameterCache.AddDefaulted(8);
 
-	ModulationStartHeight = -2000.f;
-	ModulationMaxHeight = 200.f;
-	ModulationPower = 0.9f;
 }
 
 void AOceanManager::BeginPlay()
