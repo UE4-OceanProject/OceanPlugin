@@ -133,9 +133,10 @@ private:
 UCLASS(BlueprintType, Blueprintable)
 class OCEANPLUGIN_API AOceanManager : public AActor
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
 
 public:
+	AOceanManager(const class FObjectInitializer& ObjectInitializer);
 
 	//The darker shade of color to be blended on the ocean surface
 	UPROPERTY(Category = "Appearance", BlueprintReadWrite, EditAnywhere)
@@ -203,11 +204,11 @@ public:
 
 	//Controls how much shore foam you ca see for foam type 2
 	UPROPERTY(Category = "Appearance", BlueprintReadWrite, EditAnywhere)
-		float FoamDepth2 = 6000.0f;
+		float FoamDepth2 = 2000.0f;
 
 	//Contols how quickly the shore foam textures pan
 	UPROPERTY(Category = "Appearance", BlueprintReadWrite, EditAnywhere)
-		float FoamTimeScale = 0.45f;
+		float FoamTimeScale = 1.0f;
 
 	//Controls how hard the edges of the shore foam are
 	UPROPERTY(Category = "Appearance", BlueprintReadWrite, EditAnywhere, meta = (UIMin = "0", UIMax = "1"))
@@ -223,7 +224,7 @@ public:
 
 	//Controls which ocean material is used for rendering
 	UPROPERTY(Category = "Appearance", BlueprintReadWrite, EditAnywhere)
-		TEnumAsByte<EOceanMaterialType> OceanShader = EOceanMaterialType::OceanUltra;
+		EOceanMaterialType OceanShader = EOceanMaterialType::OceanUltra;
 
 
 
@@ -337,7 +338,7 @@ public:
 
 	//Controls the overall opacity of the wave caps
 	UPROPERTY(Category = "Foam Wave Caps", BlueprintReadWrite, EditAnywhere)
-		float FoamCapsOpacity = 0.5f;
+		float FoamCapsOpacity = 0.8f;
 
 	//Controls the minimum wave height the wave caps appear at
 	UPROPERTY(Category = "Foam Wave Caps", BlueprintReadWrite, EditAnywhere)
@@ -345,7 +346,7 @@ public:
 
 	//Controls the size of the foam caps
 	UPROPERTY(Category = "Foam Wave Caps", BlueprintReadWrite, EditAnywhere)
-		float FoamCapsPower = 6.0f;
+		float FoamCapsPower = 4.0f;
 
 
 
@@ -355,7 +356,7 @@ public:
 
 	//Controls the panning speed of the offshore sea foam
 	UPROPERTY(Category = "Seafoam (Based on Heightmap)", BlueprintReadWrite, EditAnywhere)
-		float SeafoamSpeed = 0.2f;
+		float SeafoamSpeed = 0.5f;
 
 	//Controls the amount of distortion applied to the offshore sea foam texture
 	UPROPERTY(Category = "Seafoam (Based on Heightmap)", BlueprintReadWrite, EditAnywhere)

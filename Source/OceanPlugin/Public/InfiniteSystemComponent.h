@@ -24,7 +24,10 @@ enum class EFollowMethod : uint8
 UCLASS(hidecategories=(Object, Mobility, LOD), ClassGroup=Physics, showcategories=Trigger, meta=(BlueprintSpawnableComponent))
 class OCEANPLUGIN_API UInfiniteSystemComponent : public USceneComponent
 {
-	GENERATED_UCLASS_BODY()
+	GENERATED_BODY()
+
+public:
+	UInfiniteSystemComponent(const class FObjectInitializer& ObjectInitializer);
 
 	//Allows the infinite ocean system to update while in editor mode
 	UPROPERTY(Category = "Infinite Ocean System", BlueprintReadWrite, EditAnywhere)
