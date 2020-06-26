@@ -11,9 +11,17 @@ AOceanManager::AOceanManager(const class FObjectInitializer& ObjectInitializer)
 {
 	PrimaryActorTick.bCanEverTick = true;
 
+	EnableGerstnerWaves = true;
+	GlobalWaveDirection = FVector2D(0, 1);
+	GlobalWaveSpeed = 1.f;
+	GlobalWaveAmplitude = 1.f;
+	DistanceCheck = 2000.f;
 	WaveClusters.AddDefaulted(1);
 	WaveParameterCache.AddDefaulted(8);
 
+	ModulationStartHeight = -2000.f;
+	ModulationMaxHeight = 200.f;
+	ModulationPower = 0.9f;
 }
 
 void AOceanManager::BeginPlay()
