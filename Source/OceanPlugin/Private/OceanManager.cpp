@@ -96,7 +96,7 @@ void AOceanManager::LoadLandscapeHeightmap(UTexture2D* Tex2D)
 
 	HeightmapPixels.Empty();
 
-	FColor* FormatedImageData = static_cast<FColor*>(Tex2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_ONLY));
+	FColor* FormatedImageData = reinterpret_cast<FColor*>(Tex2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_ONLY));
 
 // 	HeightmapPixels.SetNum(HeightmapWidth * HeightmapHeight);
 // 	uint8* ArrayData = (uint8 *)HeightmapPixels.GetData();
