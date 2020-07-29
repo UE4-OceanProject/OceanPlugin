@@ -27,6 +27,7 @@ public class OceanPlugin : ModuleRules
             new string[]
             {
                 "Core",
+                "Landscape"
 				// ... add other public dependencies that you statically link with here ...
 			}
             );
@@ -38,8 +39,7 @@ public class OceanPlugin : ModuleRules
                 "CoreUObject",
                 "Engine",
                 "RHI",
-                "RenderCore",
-                "Landscape"
+                "RenderCore"
                 // ... add private dependencies that you statically link with here ...	
             }
             );
