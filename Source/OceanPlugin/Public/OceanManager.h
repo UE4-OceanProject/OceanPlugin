@@ -175,6 +175,15 @@ public:
 	float ModulationPower;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+		bool CustomLandscapeLocationScale;
+
+	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+		FVector LandscapeLocation;
+
+	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+		FVector LandscapeScale;
+
+	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
 	ALandscape* Landscape;
 
 	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
