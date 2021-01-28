@@ -51,12 +51,20 @@ float AOceanManager::GetWaveHeight(const FVector& location, const UWorld* World)
 
 	//Landscape height modulation
 	float LandscapeModulation = 1.f;
-	if (bEnableLandscapeModulation && IsValid(Landscape))
+	if (bEnableLandscapeModulation)
 	{
-		const FVector LandLoc = Landscape->GetActorLocation();
+		FVector LandLoc;
+		FVector LandScale;
+		if (CustomLandscapeLocationScale) {
+			LandLoc = LandscapeLocation;
+			LandScale = LandscapeScale;
+		}
+		else if (IsValid(Landscape)) {
+			LandLoc = Landscape->GetActorLocation();
+			LandScale = Landscape->GetActorScale3D();
+		}
 		const FVector2D LandXY = FVector2D(LandLoc.X, LandLoc.Y);
 		const FVector2D LocXY = FVector2D(location.X, location.Y);
-		const FVector LandScale = Landscape->GetActorScale3D();
 		const FVector2D ScaleXY = FVector2D(LandScale.X * HeightmapWidth, LandScale.Y * HeightmapHeight);
 
 		if (LocXY > LandXY && LocXY < LandXY + ScaleXY) //optimization: don't calculate modulation if outside of landscape bounds
@@ -150,12 +158,20 @@ FVector AOceanManager::GetWaveHeightValue(const FVector& location, const UWorld*
 
 	//Landscape height modulation
 	float LandscapeModulation = 1.f;
-	if (bEnableLandscapeModulation && IsValid(Landscape))
+	if (bEnableLandscapeModulation)
 	{
-		const FVector LandLoc = Landscape->GetActorLocation();
+		FVector LandLoc;
+		FVector LandScale;
+		if (CustomLandscapeLocationScale) {
+			LandLoc = LandscapeLocation;
+			LandScale = LandscapeScale;
+		}
+		else if (IsValid(Landscape)) {
+			LandLoc = Landscape->GetActorLocation();
+			LandScale = Landscape->GetActorScale3D();
+		}
 		const FVector2D LandXY = FVector2D(LandLoc.X, LandLoc.Y);
 		const FVector2D LocXY = FVector2D(location.X, location.Y);
-		const FVector LandScale = Landscape->GetActorScale3D();
 		const FVector2D ScaleXY = FVector2D(LandScale.X * HeightmapWidth, LandScale.Y * HeightmapHeight);
 
 		if (LocXY > LandXY && LocXY < LandXY + ScaleXY) //optimization: don't calculate modulation if outside of landscape bounds
