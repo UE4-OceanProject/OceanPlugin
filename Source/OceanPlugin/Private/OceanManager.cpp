@@ -2,7 +2,6 @@
 //https://github.com/UE4-OceanProject/OceanProject/blob/Master-Environment-Project/LICENSE
 
 #include "OceanManager.h"
-#include <Engine/World.h>
 #include <Engine/Texture2D.h>
 
 

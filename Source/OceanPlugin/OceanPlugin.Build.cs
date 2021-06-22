@@ -7,51 +7,24 @@ public class OceanPlugin : ModuleRules
 {
     public OceanPlugin(ReadOnlyTargetRules Target) : base(Target)
     {
-        PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
+        PublicIncludePaths.AddRange(new string[] { });
 
-        PublicIncludePaths.AddRange(
-            new string[] {
-                // ... add public include paths required here ...
-            }
-            );
+        PrivateIncludePaths.AddRange(new string[] { });
 
-
-        PrivateIncludePaths.AddRange(
-            new string[] {
-				// ... add other private include paths required here ...
-			}
-            );
+        PublicDependencyModuleNames.AddRange(new string[] {
+            "Core",
+            "Landscape"
+		});
 
 
-        PublicDependencyModuleNames.AddRange(
-            new string[]
-            {
-                "Core",
-                "Landscape"
-				// ... add other public dependencies that you statically link with here ...
-			}
-            );
+        PrivateDependencyModuleNames.AddRange(new string[] {            
+            "CoreUObject",
+            "Engine",
+            "RHI",
+            "RenderCore"
+            // ... add private dependencies that you statically link with here ...	
+        });
 
-
-        PrivateDependencyModuleNames.AddRange(
-            new string[]
-            {
-                "CoreUObject",
-                "Engine",
-                "RHI",
-                "RenderCore"
-                // ... add private dependencies that you statically link with here ...	
-            }
-            );
-
-        DynamicallyLoadedModuleNames.AddRange(
-            new string[]
-            {
-                // ... add any modules that your module loads dynamically here ...
-            }
-            );
-
-        // Make sure UBT reminds us of how to keep the project IWYU compliant
-        bEnforceIWYU = true;
+        DynamicallyLoadedModuleNames.AddRange(new string[] { });
     }
 }
