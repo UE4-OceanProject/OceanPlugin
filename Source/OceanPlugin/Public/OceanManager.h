@@ -119,39 +119,39 @@ class OCEANPLUGIN_API AOceanManager : public AActor
 
 public:
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Waves", BlueprintReadWrite, EditAnywhere)
 	bool EnableGerstnerWaves;
 
 	// The global direction the waves travel.
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Waves", BlueprintReadWrite, EditAnywhere)
 	FVector2D GlobalWaveDirection;
 
 	// The global speed multiplier of the waves.
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Waves", BlueprintReadWrite, EditAnywhere)
 	float GlobalWaveSpeed;
 
 	// The global amplitude multiplier of the waves.
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Waves", BlueprintReadWrite, EditAnywhere)
 	float GlobalWaveAmplitude;
 
 	/* Optimization: 
 	* If the distance of a buoyant point to base sea level exceeds DistanceCheck,
 	* skip the Gerstner calculations and return base sea level.
 	*/
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Buoyancy", BlueprintReadWrite, EditAnywhere)
 	float DistanceCheck;
 
 	/* Median Gerstner wave settings 
 	(only 1 cluster is used in the material by default).*/
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Waves", BlueprintReadWrite, EditAnywhere)
 	TArray<FWaveParameter> WaveClusters;
 
 	/* Individual Gerstner wave settings.
 	(leave blank to use the default offsets).*/
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Waves", BlueprintReadWrite, EditAnywhere)
 	TArray<FWaveSetParameters> WaveSetOffsetsOverride;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite)
+	UPROPERTY(Category = "Default|", BlueprintReadWrite)
 	float NetWorkTimeOffset;
 
 	UFUNCTION(BlueprintCallable, Category = "Ocean Manager", meta = (HidePin = "World"))
@@ -162,31 +162,31 @@ public:
 	float GetWaveHeight(const FVector& location, const UWorld* World = nullptr) const;
 
 	//Landscape height modulation vars.
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 	bool bEnableLandscapeModulation;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 	float ModulationStartHeight;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 	float ModulationMaxHeight;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 	float ModulationPower;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 		bool CustomLandscapeLocationScale;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 		FVector LandscapeLocation;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 		FVector LandscapeScale;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 	ALandscape* Landscape;
 
-	UPROPERTY(Category = "Ocean", BlueprintReadWrite, EditAnywhere)
+	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 	UTexture2D* HeightmapTexture;
 
 	UFUNCTION(BlueprintCallable, Category = "Ocean Manager")
