@@ -4,11 +4,13 @@
 #include "OceanManager.h"
 #include <Engine/World.h>
 #include <Engine/Texture2D.h>
-
+#define TileSize 2000.f
+#define TilesLength 32
 
 AOceanManager::AOceanManager(const class FObjectInitializer& ObjectInitializer)
 	: Super(ObjectInitializer)
 {
+	Mesh = CreateDefaultSubobject<UHierarchicalInstancedStaticMeshComponent>(TEXT("OceanMesh"));
 	PrimaryActorTick.bCanEverTick = true;
 
 	EnableGerstnerWaves = true;
@@ -23,6 +25,46 @@ AOceanManager::AOceanManager(const class FObjectInitializer& ObjectInitializer)
 	ModulationMaxHeight = 200.f;
 	ModulationPower = 0.9f;
 }
+
+void AOceanManager::OnConstruction(const FTransform& Transform) {
+	if (Mesh) {
+		if (Mesh->GetStaticMesh()) {
+			if (!bGeneratedMesh)	//To avoid frame rate drop while moving the ocean in the editor
+			{
+				TArray<FTransform> Instances;
+				FTransform Instance;
+				Instance.SetScale3D(FVector(1.f, 1.f, 1.f));
+
+				float TilesHalfLength = ((TileSize * (TilesLength - 1)) / 2.0f);
+
+				Mesh->ClearInstances();
+				FVector Loc = FVector(-TilesHalfLength, -TilesHalfLength, 0.0f);
+				for (int32 i = 0; i < TilesLength; i++) {
+					for (int32 j = 0; j < TilesLength; j++) {
+						Instance.SetLocation(Loc);
+						Instances.Add(Instance);
+						Loc.X += TileSize;
+					}
+					Loc.X = -TilesHalfLength;
+					Loc.Y += TileSize;
+				}
+				Mesh->AddInstances(Instances, false);
+			}
+			bGeneratedMesh = true;
+		}
+	}
+
+#if WITH_WEATHERDATAPLUGIN
+	if (!WeatherManager) {
+		LoadClass<UClass>(nullptr, TEXT("/WeatherDataPlugin/OceanComponents/OceanWeatherManager.OceanWeatherManager_C"), nullptr, LOAD_None, nullptr);
+		UClass* OceanWeatherClass = FindObject<UClass>(ANY_PACKAGE, TEXT("/WeatherDataPlugin/OceanComponents/OceanWeatherManager.OceanWeatherManager_C"));
+		WeatherManager = NewObject<UActorComponent>(this, OceanWeatherClass);
+	}
+#endif //WITH_WEATHERDATAPLUGIN
+
+
+}
+
 
 void AOceanManager::BeginPlay()
 {
@@ -98,13 +140,13 @@ void AOceanManager::LoadLandscapeHeightmap(UTexture2D* Tex2D)
 	Tex2D->CompressionSettings = TC_VectorDisplacementmap;
 	Tex2D->UpdateResource();
 
-	FTexture2DMipMap* MyMipMap = &Tex2D->PlatformData->Mips[0];
+	FTexture2DMipMap* MyMipMap = &Tex2D->GetPlatformData()->Mips[0];
 	HeightmapWidth = MyMipMap->SizeX;
 	HeightmapHeight = MyMipMap->SizeY;
 
 	HeightmapPixels.Empty();
 
-	FColor* FormatedImageData = reinterpret_cast<FColor*>(Tex2D->PlatformData->Mips[0].BulkData.Lock(LOCK_READ_ONLY));
+	FColor* FormatedImageData = reinterpret_cast<FColor*>(Tex2D->GetPlatformData()->Mips[0].BulkData.Lock(LOCK_READ_ONLY));
 
 // 	HeightmapPixels.SetNum(HeightmapWidth * HeightmapHeight);
 // 	uint8* ArrayData = (uint8 *)HeightmapPixels.GetData();
@@ -118,7 +160,7 @@ void AOceanManager::LoadLandscapeHeightmap(UTexture2D* Tex2D)
 		}
 	}
 	
-	Tex2D->PlatformData->Mips[0].BulkData.Unlock();
+	Tex2D->GetPlatformData()->Mips[0].BulkData.Unlock();
 
 // 	UE_LOG(LogTemp, Warning, TEXT("num = %d"), HeightmapPixels.Num());
 // 	UE_LOG(LogTemp, Warning, TEXT("numx = %f"), (float)HeightmapPixels[0].R);
@@ -343,6 +385,24 @@ FVector AOceanManager::CalculateGerstnerWaveVector(float rotation, float waveLen
 
 	return FVector(QA * dir.X * c, QA * dir.Y * c, amplitude * s);
 }
+
+void AOceanManager::InitWeatherDataManager(int32 QualityLevel) {
+#if WITH_WEATHERDATAPLUGIN
+#if WITH_EDITOR
+	if (GIsEditor)
+	{
+		FEditorScriptExecutionGuard ScriptGuard; // to make CallFunctionByNameWithArguments run in the editor 
+	}
+#endif //WITHEDITOR
+	if (WeatherManager) {
+		FOutputDeviceNull OutputDeviceNull;
+		FString Function = FString::Printf(TEXT("Init %d"),QualityLevel);
+		WeatherManager->CallFunctionByNameWithArguments(*Function, OutputDeviceNull, nullptr, true);
+
+	}
+#endif //WITH_WEATHERDATAPLUGIN
+}
+
 
 bool FWaveCache::GetDir(float rotation, const FVector2D& inDirection, FVector* outDir)
 {

@@ -5,6 +5,10 @@
 
 #include "CoreMinimal.h"
 #include "Landscape.h"
+#include "Components/HierarchicalInstancedStaticMeshComponent.h"
+#if WITH_WEATHERDATAPLUGIN
+#include "Misc/OutputDeviceNull.h"
+#endif
 #include "OceanManager.generated.h"
 
 
@@ -118,6 +122,9 @@ class OCEANPLUGIN_API AOceanManager : public AActor
 	GENERATED_UCLASS_BODY()
 
 public:
+	//Mesh
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadWrite)
+	UHierarchicalInstancedStaticMeshComponent* Mesh;
 
 	UPROPERTY(Category = "Default|Waves", BlueprintReadWrite, EditAnywhere)
 	bool EnableGerstnerWaves;
@@ -189,15 +196,25 @@ public:
 	UPROPERTY(Category = "Default|Landscape", BlueprintReadWrite, EditAnywhere)
 	UTexture2D* HeightmapTexture;
 
+	UPROPERTY(Category = "Default|Components", BlueprintReadOnly, EditAnywhere)
+		UActorComponent* WeatherManager;
+
 	UFUNCTION(BlueprintCallable, Category = "Ocean Manager")
 	void LoadLandscapeHeightmap(UTexture2D* Tex2D);
 
 	UFUNCTION(BlueprintCallable, Category = "Ocean Manager")
 	FLinearColor GetHeightmapPixel(float U, float V) const;
 
+	//Will call Init function inside WeatherDataPlugin if the plugin was installed,otherwise will do nothing.
+	UFUNCTION(BlueprintCallable, Category = "Ocean Manager")
+	void InitWeatherDataManager(int32 QualityLevel);
+
 private:
 
 	virtual void BeginPlay() override;
+	virtual void OnConstruction(const FTransform& Transform);
+
+	bool bGeneratedMesh = false;
 
 	TArray<FFloat16Color> HeightmapPixels;
 	int32 HeightmapWidth;

@@ -65,12 +65,15 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 		{
 			NewLoc = CamLoc;
 			NewLoc = NewLoc.GridSnap(GridSnapSize);
-			NewLoc.Z = GetAttachParent()->GetComponentLocation().Z;
-			GetAttachParent()->SetWorldLocation(NewLoc);
+			//NewLoc.Z = GetAttachParent()->GetComponentLocation().Z;
+			NewLoc.Z = GetOwner()->GetActorLocation().Z;
+			//GetAttachParent()->SetWorldLocation(NewLoc);
+			GetOwner()->SetActorLocation(NewLoc);
 		}
 		else
 		{
-			GetAttachParent()->SetRelativeLocation(FVector(0, 0, 0)); //Reset location
+		//	GetAttachParent()->SetRelativeLocation(FVector(0, 0, 0)); //Reset location
+			GetOwner()->SetActorLocation(FVector(0, 0, 0));
 		}
 
 		float Distance = FMath::Abs(CamLoc.Z - GetAttachParent()->GetComponentLocation().Z);
@@ -82,15 +85,19 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 
 			float DistScale = Distance / ScaleDistanceFactor;
 			DistScale = FMath::Clamp(DistScale, ScaleMin, ScaleMax);
-			GetAttachParent()->SetRelativeScale3D(FVector(DistScale, DistScale, 1));
+			//GetAttachParent()->SetRelativeScale3D(FVector(DistScale, DistScale, 1));
+			GetOwner()->SetActorScale3D(FVector(DistScale, DistScale, 1));
 		}
 		else if (ScaleByDistance)
 		{
-			GetAttachParent()->SetRelativeScale3D(FVector(ScaleMin, ScaleMin, 1));
+			//GetAttachParent()->SetRelativeScale3D(FVector(ScaleMin, ScaleMin, 1));
+			GetOwner()->SetActorScale3D(FVector(ScaleMin, ScaleMin, 1));
 		}
 		else
 		{
-			GetAttachParent()->SetRelativeScale3D(FVector(1, 1, 1));
+			//GetAttachParent()->SetRelativeScale3D(FVector(1, 1, 1));
+			GetOwner()->SetActorScale3D(FVector(1, 1, 1));
+
 		}
 
 // 		if (ScaleByDistance && FMath::Abs(CamLoc.Z - AttachParent->GetComponentLocation().Z) > ScaleStartDistance)
@@ -119,14 +126,16 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 		}
 		else
 		{
-			PawnLoc = GetAttachParent()->GetComponentLocation();
+			//PawnLoc = GetAttachParent()->GetComponentLocation();
+			PawnLoc = GetOwner()->GetActorLocation();
 		}
 	}
 
 	switch (FollowMethod)
 	{
 		case EFollowMethod::LookAtLocation:
-			if (!FMath::SegmentPlaneIntersection(CamLoc, CamLoc + CamRot.Vector() * MaxLookAtDistance, FPlane(GetAttachParent()->GetComponentLocation(), FVector(0, 0, 1)), NewLoc))
+			//if (!FMath::SegmentPlaneIntersection(CamLoc, CamLoc + CamRot.Vector() * MaxLookAtDistance, FPlane(GetAttachParent()->GetComponentLocation(), FVector(0, 0, 1)), NewLoc))
+			if (!FMath::SegmentPlaneIntersection(CamLoc, CamLoc + CamRot.Vector() * MaxLookAtDistance, FPlane(GetOwner()->GetActorLocation(), FVector(0, 0, 1)), NewLoc))
 			{
 				NewLoc = CamLoc + CamRot.Vector() * MaxLookAtDistance;
 			}
@@ -143,7 +152,8 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 
 	//UE_LOG(LogTemp, Warning, TEXT("Camera Z Distance from Plane: %f"), FMath::Abs(CamLoc.Z - AttachParent->GetComponentLocation().Z));
 
-	float Distance = FMath::Abs(CamLoc.Z - GetAttachParent()->GetComponentLocation().Z);
+	//float Distance = FMath::Abs(CamLoc.Z - GetAttachParent()->GetComponentLocation().Z);
+	float Distance = FMath::Abs(CamLoc.Z - GetOwner()->GetActorLocation().Z);
 
 	if (ScaleByDistance && Distance > ScaleStartDistance)
 	{
@@ -152,20 +162,25 @@ void UInfiniteSystemComponent::TickComponent(float DeltaTime, enum ELevelTick Ti
 
 		float DistScale = Distance / ScaleDistanceFactor;
 		DistScale = FMath::Clamp(DistScale, ScaleMin, ScaleMax);
-		GetAttachParent()->SetRelativeScale3D(FVector(DistScale, DistScale, 1));
+		//GetAttachParent()->SetRelativeScale3D(FVector(DistScale, DistScale, 1));
+		GetOwner()->SetActorScale3D(FVector(DistScale, DistScale, 1));
+
 	}
 	else if (ScaleByDistance)
 	{
-		GetAttachParent()->SetRelativeScale3D(FVector(ScaleMin, ScaleMin, 1));
+		//GetAttachParent()->SetRelativeScale3D(FVector(ScaleMin, ScaleMin, 1));
+		GetOwner()->SetActorScale3D(FVector(ScaleMin, ScaleMin, 1));
 	}
 	else
 	{
-		GetAttachParent()->SetRelativeScale3D(FVector(1, 1, 1));
+		//GetAttachParent()->SetRelativeScale3D(FVector(1, 1, 1));
+		GetOwner()->SetActorScale3D(FVector(1, 1, 1));
 	}
 
 	if (FollowMethod == EFollowMethod::Stationary) return;
 
 	NewLoc = NewLoc.GridSnap(GridSnapSize);
-	NewLoc.Z = GetAttachParent()->GetComponentLocation().Z;
-	GetAttachParent()->SetWorldLocation(NewLoc);
+	//NewLoc.Z = GetAttachParent()->GetComponentLocation().Z;
+	NewLoc.Z = GetOwner()->GetActorLocation().Z;
+	GetOwner()->SetActorLocation(NewLoc);
 }
