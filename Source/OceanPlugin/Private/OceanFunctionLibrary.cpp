@@ -18,7 +18,7 @@ void UOceanFunctionLibrary::UpdateSun(UObject* WorldContextObject) {
 #endif //WITHEDITOR
 	ASkyManager* SkyManager = nullptr;
 	//May not be the best way as hardcoded text maynot be a good practice
-	UClass* BPSkyClass = FindObject<UClass>(ANY_PACKAGE, TEXT("/SkyPlugin/BP_Sky.BP_Sky_C"));
+	UClass* BPSkyClass = FindObject<UClass>(nullptr, TEXT("/SkyPlugin/BP_Sky.BP_Sky_C"));
 	if (BPSkyClass) {
 		TArray<AActor*> FoundActors;
 		UGameplayStatics::GetAllActorsOfClass(WorldContextObject->GetWorld(), BPSkyClass, FoundActors);

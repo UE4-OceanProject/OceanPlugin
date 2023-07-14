@@ -57,7 +57,7 @@ void AOceanManager::OnConstruction(const FTransform& Transform) {
 #if WITH_WEATHERDATAPLUGIN
 	if (!WeatherManager) {
 		LoadClass<UClass>(nullptr, TEXT("/WeatherDataPlugin/OceanComponents/OceanWeatherManager.OceanWeatherManager_C"), nullptr, LOAD_None, nullptr);
-		UClass* OceanWeatherClass = FindObject<UClass>(ANY_PACKAGE, TEXT("/WeatherDataPlugin/OceanComponents/OceanWeatherManager.OceanWeatherManager_C"));
+		UClass* OceanWeatherClass = FindObject<UClass>(nullptr, TEXT("/WeatherDataPlugin/OceanComponents/OceanWeatherManager.OceanWeatherManager_C"));
 		WeatherManager = NewObject<UActorComponent>(this, OceanWeatherClass);
 	}
 #endif //WITH_WEATHERDATAPLUGIN
@@ -216,7 +216,7 @@ FVector AOceanManager::GetWaveHeightValue(const FVector& location, const UWorld*
 		const FVector2D LocXY = FVector2D(location.X, location.Y);
 		const FVector2D ScaleXY = FVector2D(LandScale.X * HeightmapWidth, LandScale.Y * HeightmapHeight);
 
-		if (LocXY > LandXY && LocXY < LandXY + ScaleXY) //optimization: don't calculate modulation if outside of landscape bounds
+		if (LocXY.ComponentwiseAllGreaterThan(LandXY) && LocXY.ComponentwiseAllLessThan(LandXY + ScaleXY)) //optimization: don't calculate modulation if outside of landscape bounds
 		{
 			FVector2D UV = LocXY - (LandXY + ScaleXY / 2.f);
 			UV = UV / ScaleXY + 0.5f;
