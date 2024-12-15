@@ -76,6 +76,7 @@ public class OceanPlugin : ModuleRules
 			}else{PublicDefinitions.Add("WITH_WEATHERDATAPLUGIN=0");}
 
         // Make sure UBT reminds us of how to keep the project IWYU compliant
-        bEnforceIWYU = true;
+        IWYUSupport = IWYUSupport.Full;
+        CppStandard = CppStandardVersion.Cpp20;
     }
 }
